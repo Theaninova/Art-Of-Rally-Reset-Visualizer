@@ -7,6 +7,10 @@ A mod for Art Of Rally that visualizes waypoints and reset zones.
 
 ![Showcase Image](unknown.png)
 
+Demo Video:
+
+[![Showcase Video](https://img.youtube.com/vi/eT5rsWEf0oo/0.jpg)](https://www.youtube.com/watch?v=eT5rsWEf0oo)
+
 ## Usage
 
 Key Binds
