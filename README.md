@@ -1,18 +1,25 @@
 # Art Or™ Rally Reset Visualizer
 
 [![](https://img.shields.io/github/v/release/Theaninova/Art-Of-Rally-Reset-Visualizer?label=Download)](https://github.com/Theaninova/Art-Of-Rally-Reset-Visualizer/releases/latest)
-![](https://img.shields.io/badge/Game%20Version-v1.3.3a-green)
-![](https://img.shields.io/badge/GOG-Supprted-green)
-![](https://img.shields.io/badge/Steam-Supprted-green)
-![](https://img.shields.io/badge/Epic-Not%20Supprted-red)
+![](https://img.shields.io/badge/Game%20Version-v1.3.3a-blue)
 
 A mod for Art Of Rally that visualizes waypoints and reset zones.
 
-![Showcase Image](unknown.png)
+#### Launcher Support
+![](https://img.shields.io/badge/GOG-Supprted-green)
+![](https://img.shields.io/badge/Steam-Supprted-green)
+![](https://img.shields.io/badge/Epic-Not%20Yet%20Supprted-orange)
 
-Demo Video:
+#### Platform Support
+![](https://img.shields.io/badge/Windows-Supprted-green)
+![](https://img.shields.io/badge/Linux-Not%20Supprted-red)
+![](https://img.shields.io/badge/OS%2FX-Not%20Supprted-red)
+![](https://img.shields.io/badge/PlayStation-Never-red)
+![](https://img.shields.io/badge/XBox-Never-red)
+![](https://img.shields.io/badge/Switch-Never-red)
 
-[![Showcase Video](https://img.youtube.com/vi/eT5rsWEf0oo/0.jpg)](https://www.youtube.com/watch?v=eT5rsWEf0oo)
+
+
 
 ## Usage
 
@@ -20,6 +27,16 @@ Key Binds
 * `F8`: Toggle no-go zones (**on by default**)
 * `F9`: Toggle waypoint visualizers
 * `F10`: Turn of all visualizers
+
+## Showcase
+
+![Showcase Image](unknown.png)
+
+Demo Video:
+
+[![Showcase Video](https://img.youtube.com/vi/eT5rsWEf0oo/0.jpg)](https://www.youtube.com/watch?v=eT5rsWEf0oo)
+
+
 
 ## Changes
 
