@@ -1,6 +1,6 @@
 # Art-Of-Rally-Reset-Visualizer
 
-![](https://img.shields.io/github/v/release/Theaninova/Art-Of-Rally-Reset-Visualizer?label=Download)
+[![](https://img.shields.io/github/v/release/Theaninova/Art-Of-Rally-Reset-Visualizer?label=Download)](https://github.com/Theaninova/Art-Of-Rally-Reset-Visualizer/releases/latest)
 ![](https://img.shields.io/badge/Game%20Version-v1.3.3a-green)
 
 A mod for Art Of Rally that visualizes waypoints and reset zones.
