@@ -1,7 +1,13 @@
 <Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TargetFramework>net40</TargetFramework>
+    <Title>Art Of Rally - Reset Visualizer</Title>
+    <Authors>Theaninova</Authors>
+    <PackageProjectUrl>https://github.com/Theaninova/Art-Of-Rally-Reset-Visualizer</PackageProjectUrl>
+    <PackageLicenseUrl>https://github.com/Theaninova/Art-Of-Rally-Reset-Visualizer/blob/master/LICENSE</PackageLicenseUrl>
+    <RepositoryUrl>https://github.com/Theaninova/Art-Of-Rally-Reset-Visualizer</RepositoryUrl>
+    <RepositoryType>GitHub</RepositoryType>
   </PropertyGroup>
 
   <ItemGroup>

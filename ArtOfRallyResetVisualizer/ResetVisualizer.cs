@@ -1,5 +1,4 @@
-﻿using HarmonyLib;
-using UnityEngine;
+﻿using UnityEngine;
 
 namespace ArtOfRallyResetVisualizer
 {
@@ -16,10 +15,11 @@ namespace ArtOfRallyResetVisualizer
 	    public const string NoGoVisualizersName = "NoGoVisualizers";
 	    public const string WaypointVisualizersName = "WaypointVisualizersName";
 
-	    private static void SetTransparentColor(GameObject gameObject, Color color)
+	    public static void SetTransparentColor(GameObject gameObject, Color color)
         {
 			var meshRenderer = gameObject.GetComponent(typeof(MeshRenderer)) as MeshRenderer;
-			meshRenderer!.receiveShadows = false;
+			if (meshRenderer == null) return;
+			meshRenderer.receiveShadows = false;
 			var material = meshRenderer.material;
 			material.SetInt(SrcBlend, 1);
 			material.SetInt(DstBlend, 10);
@@ -37,29 +37,28 @@ namespace ArtOfRallyResetVisualizer
 			material.EnableKeyword("_GlossyReflections");
 			material.SetFloat(SpecularHighlights, 0f);
 			material.SetFloat(GlossyReflections, 0f);
-		}
-	    
+        }
+    }
 
-        [HarmonyPatch(typeof(OutOfBoundsManager), nameof(OutOfBoundsManager.Start))]
-        [HarmonyPostfix]
-        // ReSharper disable twice InconsistentNaming
-        public static void Start(OutOfBoundsManager __instance, float ___RESET_DISTANCE)
-        {
-	        Transform resets = null;
-            try
-            {
-                resets = GameObject.Find("ResetZones").transform;
-            }
-            catch
-            {
-	            // ignored
-            }
+	public class OutOfBoundsManagerPatch {
+		// ReSharper disable twice InconsistentNaming
+		public static void Start(OutOfBoundsManager __instance, float ___RESET_DISTANCE)
+		{
+			Transform resets = null;
+			try
+			{
+				resets = GameObject.Find("ResetZones").transform;
+			}
+			catch
+			{
+				// ignored
+			}
 
-            if (resets != null)
-            {
-	            var noGoParent = new GameObject(NoGoVisualizersName);
-	            noGoParent.SetActive(Main.Settings.ShowResetZones);
-	            Object.Instantiate(noGoParent);
+			if (resets != null)
+			{
+				var noGoParent = new GameObject(ResetVisualizer.NoGoVisualizersName);
+				noGoParent.SetActive(Main.Settings.ShowResetZones);
+				Object.Instantiate(noGoParent);
 				foreach (var obj in resets)
 				{
 					var resetObj = ((Transform)obj).gameObject.GetComponent<SphereCollider>();
@@ -72,15 +71,15 @@ namespace ArtOfRallyResetVisualizer
 					noGoVisualizer.transform.localScale = new Vector3(radius, radius, radius);
 
 					((Collider)noGoVisualizer.GetComponent(typeof(Collider))).isTrigger = true;
-					SetTransparentColor(noGoVisualizer, new Color(1f, 0f, 0f, 0.7f));
+					ResetVisualizer.SetTransparentColor(noGoVisualizer, new Color(1f, 0f, 0f, 0.7f));
 				}
 			}
 
-            var waypointParent = new GameObject(WaypointVisualizersName);
-            waypointParent.SetActive(Main.Settings.ShowWaypoints);
-            Object.Instantiate(waypointParent);
+			var waypointParent = new GameObject(ResetVisualizer.WaypointVisualizersName);
+			waypointParent.SetActive(Main.Settings.ShowWaypoints);
+			Object.Instantiate(waypointParent);
 			foreach (var transform in __instance.GetWaypointList())
-            {
+			{
 				var waypointVisualizer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
 				waypointVisualizer.transform.SetParent(waypointParent.transform);
@@ -90,8 +89,8 @@ namespace ArtOfRallyResetVisualizer
 				waypointVisualizer.transform.localScale = new Vector3(radius, radius, radius);
 
 				((Collider)waypointVisualizer.GetComponent(typeof(Collider))).isTrigger = true;
-				SetTransparentColor(waypointVisualizer, new Color(1f, 0.8f, 0.8f, 0.1f));
+				ResetVisualizer.SetTransparentColor(waypointVisualizer, new Color(1f, 0.8f, 0.8f, 0.1f));
 			}
 		}
-    }
+	}
 }
