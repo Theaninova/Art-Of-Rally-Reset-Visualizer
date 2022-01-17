@@ -1,4 +1,6 @@
-﻿using UnityEngine;
+﻿using System.Reflection;
+using HarmonyLib;
+using UnityEngine;
 using UnityModManagerNet;
 
 namespace ArtOfRallyResetVisualizer
@@ -6,32 +8,20 @@ namespace ArtOfRallyResetVisualizer
     // ReSharper disable once ClassNeverInstantiated.Global
     public class Main
     {
-        public static bool ShowNoGoZones;
-        public static bool ShowWaypoints;
+        public static Settings Settings;
 
         // ReSharper disable once ArrangeTypeMemberModifiers
         // ReSharper disable once UnusedMember.Local
         static bool Load(UnityModManager.ModEntry modEntry)
         {
-            modEntry.OnGUI = OnGUI;
+            var harmony = new Harmony(modEntry.Info.Id);
+            harmony.PatchAll(Assembly.GetExecutingAssembly());
+
+            Settings = new Settings();
+            modEntry.OnGUI = entry => Settings.Draw(entry);
+            modEntry.OnSaveGUI = entry => Settings.Save(entry);
+
             return true;
-        }
-
-        private static void OnGUI(UnityModManager.ModEntry modEntry)
-        {
-            GUILayout.Label("Reset Visualizer");
-
-            if (ShowNoGoZones != GUILayout.Toggle(ShowNoGoZones, "Reset Zones"))
-            {
-                ShowNoGoZones = !ShowNoGoZones;
-                GameObject.Find(ResetVisualizer.NoGoVisualizersName)?.SetActive(ShowNoGoZones);
-            }
-
-            if (ShowWaypoints != GUILayout.Toggle(ShowWaypoints, "Waypoints"))
-            {
-                ShowWaypoints = !ShowWaypoints;
-                GameObject.Find(ResetVisualizer.WaypointVisualizersName)?.SetActive(ShowWaypoints);
-            }
         }
     }
 }

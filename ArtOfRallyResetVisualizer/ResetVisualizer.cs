@@ -3,7 +3,8 @@ using UnityEngine;
 
 namespace ArtOfRallyResetVisualizer
 {
-    public class ResetVisualizer
+	// ReSharper disable once ClassNeverInstantiated.Global
+	public class ResetVisualizer
     {
 	    private static readonly int SrcBlend = Shader.PropertyToID("_SrcBlend");
 	    private static readonly int DstBlend = Shader.PropertyToID("_DstBlend");
@@ -37,11 +38,12 @@ namespace ArtOfRallyResetVisualizer
 			material.SetFloat(SpecularHighlights, 0f);
 			material.SetFloat(GlossyReflections, 0f);
 		}
+	    
 
         [HarmonyPatch(typeof(OutOfBoundsManager), nameof(OutOfBoundsManager.Start))]
         [HarmonyPostfix]
         // ReSharper disable twice InconsistentNaming
-        public void Start(OutOfBoundsManager __instance, float ___RESET_DISTANCE)
+        public static void Start(OutOfBoundsManager __instance, float ___RESET_DISTANCE)
         {
 	        Transform resets = null;
             try
@@ -56,7 +58,7 @@ namespace ArtOfRallyResetVisualizer
             if (resets != null)
             {
 	            var noGoParent = new GameObject(NoGoVisualizersName);
-	            noGoParent.SetActive(Main.ShowNoGoZones);
+	            noGoParent.SetActive(Main.Settings.ShowResetZones);
 	            Object.Instantiate(noGoParent);
 				foreach (var obj in resets)
 				{
@@ -75,7 +77,7 @@ namespace ArtOfRallyResetVisualizer
 			}
 
             var waypointParent = new GameObject(WaypointVisualizersName);
-            waypointParent.SetActive(Main.ShowWaypoints);
+            waypointParent.SetActive(Main.Settings.ShowWaypoints);
             Object.Instantiate(waypointParent);
 			foreach (var transform in __instance.GetWaypointList())
             {
