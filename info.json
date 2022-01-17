@@ -1,0 +1,8 @@
+{
+  "Id": "ResetVisualizer",
+  "DisplayName": "Reset Visualizer",
+  "Author": "Theaninova \"Myth's gf\"",
+  "Version": "1.1.0",
+  "GameVersion": "1.3.3a",
+  "EntryMethod": "ArtOfRallyResetVisualizer.Main.Load"
+}
