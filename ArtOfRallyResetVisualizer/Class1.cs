@@ -1,5 +1,4 @@
-﻿using System.Collections.Generic;
-using HarmonyLib;
+﻿using HarmonyLib;
 using UnityEngine;
 
 namespace ArtOfRallyResetVisualizer
@@ -63,7 +62,7 @@ namespace ArtOfRallyResetVisualizer
 					var resetObj = ((Transform)obj).gameObject.GetComponent<SphereCollider>();
 					var noGoVisualizer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 					
-					noGoVisualizer.SetActive(false);
+					noGoVisualizer.SetActive(true);
 					noGoVisualizer.transform.SetParent(noGoParent.transform);
 					noGoVisualizer.transform.position = resetObj.transform.position;
 
@@ -81,7 +80,7 @@ namespace ArtOfRallyResetVisualizer
             {
 				var waypointVisualizer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
-				waypointVisualizer.SetActive(false);
+				waypointVisualizer.SetActive(true);
 				waypointVisualizer.transform.SetParent(waypointParent.transform);
 				waypointVisualizer.transform.position = transform;
 
