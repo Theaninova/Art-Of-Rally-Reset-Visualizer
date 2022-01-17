@@ -3,7 +3,7 @@
 [![](https://img.shields.io/github/v/release/Theaninova/Art-Of-Rally-Reset-Visualizer?label=Download)](https://github.com/Theaninova/Art-Of-Rally-Reset-Visualizer/releases/latest)
 ![](https://img.shields.io/badge/Game%20Version-v1.3.3a-blue)
 
-A mod for Art Of Rally that visualizes waypoints and reset zones.
+A mod for Art Of Rally that visualizes waypoints and reset zones. [**Demo Video**](https://www.youtube.com/watch?v=eT5rsWEf0oo).
 
 #### Launcher Support
 ![](https://img.shields.io/badge/GOG-Supprted-green)
@@ -34,9 +34,7 @@ and drop it into the mod manager's mods page.
 
 ## Showcase
 
-![Showcase Image](unknown.png)
+[**Demo Video:**](https://www.youtube.com/watch?v=eT5rsWEf0oo)
 
-Demo Video:
-
-[![Showcase Video](https://img.youtube.com/vi/eT5rsWEf0oo/0.jpg)](https://www.youtube.com/watch?v=eT5rsWEf0oo)
+[![Showcase Image](unknown.png)](https://www.youtube.com/watch?v=eT5rsWEf0oo)
 
