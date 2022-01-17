@@ -4,5 +4,6 @@
   "Author": "Theaninova \"Myth's gf\"",
   "Version": "1.1.0",
   "GameVersion": "1.3.3a",
+  "AssemblyName": "ArtOfRallyResetVisualizer.dll",
   "EntryMethod": "ArtOfRallyResetVisualizer.Main.Load"
 }
