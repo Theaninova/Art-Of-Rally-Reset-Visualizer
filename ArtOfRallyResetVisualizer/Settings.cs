@@ -14,5 +14,10 @@ namespace ArtOfRallyResetVisualizer
             GameObject.Find(ResetVisualizer.NoGoVisualizersName)?.SetActive(ShowResetZones);
             GameObject.Find(ResetVisualizer.WaypointVisualizersName)?.SetActive(ShowWaypoints);
         }
+
+        public override void Save(UnityModManager.ModEntry modEntry)
+        {
+            Save(this, modEntry);
+        }
     }
 }

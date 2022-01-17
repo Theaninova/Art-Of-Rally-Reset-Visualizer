@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using System.Reflection;
+using HarmonyLib;
 using UnityModManagerNet;
 
 namespace ArtOfRallyResetVisualizer
@@ -14,14 +15,7 @@ namespace ArtOfRallyResetVisualizer
         static bool Load(UnityModManager.ModEntry modEntry)
         {
             var harmony = new Harmony(modEntry.Info.Id);
-            harmony.Patch(typeof(OutOfBoundsManager).GetMethod("Start"),
-                postfix: new HarmonyMethod(typeof(OutOfBoundsManagerPatch).GetMethod("Start")));
-            /*SceneManager.sceneLoaded += (scene, mode) =>
-            {
-                if (_patched) return;
-                
-                _patched = true;
-            };*/
+            harmony.PatchAll(Assembly.GetExecutingAssembly());
 
             Settings = new Settings();
             modEntry.OnGUI = entry => Settings.Draw(entry);
