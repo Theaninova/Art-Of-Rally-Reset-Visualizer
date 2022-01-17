@@ -12,8 +12,8 @@ namespace ArtOfRallyResetVisualizer
 	    private static readonly int SpecularHighlights = Shader.PropertyToID("_SpecularHighlights");
 	    private static readonly int GlossyReflections = Shader.PropertyToID("_GlossyReflections");
 
-	    private const string NoGoVisualizersName = "NoGoVisualizers";
-	    private const string WaypointVisualizersName = "WaypointVisualizersName";
+	    public const string NoGoVisualizersName = "NoGoVisualizers";
+	    public const string WaypointVisualizersName = "WaypointVisualizersName";
 
 	    private static void SetTransparentColor(GameObject gameObject, Color color)
         {
@@ -56,13 +56,13 @@ namespace ArtOfRallyResetVisualizer
             if (resets != null)
             {
 	            var noGoParent = new GameObject(NoGoVisualizersName);
+	            noGoParent.SetActive(Main.ShowNoGoZones);
 	            Object.Instantiate(noGoParent);
 				foreach (var obj in resets)
 				{
 					var resetObj = ((Transform)obj).gameObject.GetComponent<SphereCollider>();
 					var noGoVisualizer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-					
-					noGoVisualizer.SetActive(true);
+
 					noGoVisualizer.transform.SetParent(noGoParent.transform);
 					noGoVisualizer.transform.position = resetObj.transform.position;
 
@@ -75,12 +75,12 @@ namespace ArtOfRallyResetVisualizer
 			}
 
             var waypointParent = new GameObject(WaypointVisualizersName);
+            waypointParent.SetActive(Main.ShowWaypoints);
             Object.Instantiate(waypointParent);
 			foreach (var transform in __instance.GetWaypointList())
             {
 				var waypointVisualizer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
 
-				waypointVisualizer.SetActive(true);
 				waypointVisualizer.transform.SetParent(waypointParent.transform);
 				waypointVisualizer.transform.position = transform;
 
