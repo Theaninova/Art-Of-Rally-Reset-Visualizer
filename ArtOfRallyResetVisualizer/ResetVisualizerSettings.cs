@@ -3,7 +3,7 @@ using UnityModManagerNet;
 
 namespace ArtOfRallyResetVisualizer
 {
-    public class Settings : UnityModManager.ModSettings, IDrawable
+    public class ResetVisualizerSettings : UnityModManager.ModSettings, IDrawable
     {
         [Header("Visualizers")]
         [Draw("Reset Zones")] public bool ShowResetZones = false;

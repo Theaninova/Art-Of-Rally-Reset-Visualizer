@@ -7,7 +7,7 @@ namespace ArtOfRallyResetVisualizer
     // ReSharper disable once ClassNeverInstantiated.Global
     public class Main
     {
-        public static Settings Settings;
+        public static ResetVisualizerSettings ResetVisualizerSettings;
         // private static bool _patched = false;
 
         // ReSharper disable once ArrangeTypeMemberModifiers
@@ -17,9 +17,9 @@ namespace ArtOfRallyResetVisualizer
             var harmony = new Harmony(modEntry.Info.Id);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
 
-            Settings = new Settings();
-            modEntry.OnGUI = entry => Settings.Draw(entry);
-            modEntry.OnSaveGUI = entry => Settings.Save(entry);
+            ResetVisualizerSettings = UnityModManager.ModSettings.Load<ResetVisualizerSettings>(modEntry);
+            modEntry.OnGUI = entry => ResetVisualizerSettings.Draw(entry);
+            modEntry.OnSaveGUI = entry => ResetVisualizerSettings.Save(entry);
 
             return true;
         }
