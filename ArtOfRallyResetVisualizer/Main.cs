@@ -21,6 +21,7 @@ namespace ArtOfRallyResetVisualizer
             ResetVisualizerSettings = UnityModManager.ModSettings.Load<ResetVisualizerSettings>(modEntry);
             modEntry.OnGUI = entry => ResetVisualizerSettings.Draw(entry);
             modEntry.OnSaveGUI = entry => ResetVisualizerSettings.Save(entry);
+            ResetVisualizer.IsLeaderboardDisabled = ResetVisualizerSettings.RenderMode == RenderMode.Always;
 
             return true;
         }

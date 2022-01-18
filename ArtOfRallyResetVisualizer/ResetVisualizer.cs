@@ -14,8 +14,7 @@ namespace ArtOfRallyResetVisualizer
         private static readonly int SpecularHighlights = Shader.PropertyToID("_SpecularHighlights");
         private static readonly int GlossyReflections = Shader.PropertyToID("_GlossyReflections");
 
-        public const string ResetVisualizersName = "NoGoVisualizers";
-        public const string WaypointVisualizersName = "WaypointVisualizersName";
+        public static bool IsLeaderboardDisabled;
 
         public static List<GameObject> ResetObjects;
         public static List<GameObject> WaypointObjects;

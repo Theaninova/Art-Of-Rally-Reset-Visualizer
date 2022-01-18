@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 using UnityModManagerNet;
+// ReSharper disable FieldCanBeMadeReadOnly.Global
+// ReSharper disable ConvertToConstant.Global
 
 namespace ArtOfRallyResetVisualizer.Settings
 {
