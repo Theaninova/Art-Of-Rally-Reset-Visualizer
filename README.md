@@ -24,6 +24,19 @@ A mod for Art Of Rally that visualizes waypoints and reset zones. [**Demo Video*
 Press `CTRL + F10` to bring up the mod menu. Click on the Reset Visualizer mod,
 and enable or disable the desired features.
 
+### Features
+
+#### Always Show
+
+Always shows the bubbles
+
+*This will disable the leaderboard by applying terminal damage when you
+hit the finish line*
+
+#### On Hit
+
+This will only show the bubbles when you hit them
+
 ## Installation
 
 Follow the [installation guide](https://www.nexusmods.com/site/mods/21/) of
