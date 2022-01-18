@@ -85,7 +85,7 @@ namespace ArtOfRallyResetVisualizer
                     noGoVisualizer.transform.localScale = new Vector3(radius, radius, radius);
 
                     ((Collider)noGoVisualizer.GetComponent(typeof(Collider))).isTrigger = true;
-                    ResetVisualizer.SetTransparentColor(noGoVisualizer, new Color(1f, 0f, 0f, 0.7f));
+                    ResetVisualizer.SetTransparentColor(noGoVisualizer, Main.ResetVisualizerSettings.ResetColor);
                 }
             }
 
@@ -102,7 +102,7 @@ namespace ArtOfRallyResetVisualizer
                 waypointVisualizer.transform.localScale = new Vector3(radius, radius, radius);
 
                 ((Collider)waypointVisualizer.GetComponent(typeof(Collider))).isTrigger = true;
-                ResetVisualizer.SetTransparentColor(waypointVisualizer, new Color(1f, 0.8f, 0.8f, 0.1f));
+                ResetVisualizer.SetTransparentColor(waypointVisualizer, Main.ResetVisualizerSettings.WaypointColor);
             }
         }
     }
