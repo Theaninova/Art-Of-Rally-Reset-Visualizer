@@ -56,15 +56,16 @@ namespace ArtOfRallyResetVisualizer
         public static void UpdateAllComponents(bool onHitShow = false)
         {
             var settings = Main.ResetVisualizerSettings;
+            var alwaysShow = settings.RenderMode == RenderMode.Always && IsLeaderboardDisabled;
 
             UpdateComponent(
                 ResetObjects,
-                settings.ShowResetZones && (settings.RenderMode == RenderMode.Always || onHitShow),
+                settings.ShowResetZones && (alwaysShow || onHitShow),
                 settings.ResetColor
             );
             UpdateComponent(
                 WaypointObjects,
-                settings.ShowWaypoints && (settings.RenderMode == RenderMode.Always || onHitShow),
+                settings.ShowWaypoints && (alwaysShow || onHitShow),
                 settings.WaypointColor
             );
         }

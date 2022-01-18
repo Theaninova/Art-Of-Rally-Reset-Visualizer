@@ -33,7 +33,7 @@ namespace ArtOfRallyResetVisualizer
             GUI.Label(Rect.zero, Main.ResetVisualizerSettings.RenderMode == RenderMode.Always
                     ? ResetVisualizer.IsLeaderboardDisabled
                         ? "LEADERBOARD DISABLED"
-                        : "START NEW GAME TO SHOW VISUALIZERS (DISABLES LEADERBOARDS)"
+                        : "Start new game to enable visualizers"
                     : "LEADERBOARD DISABLED, START NEW GAME TO RE-ENABLE",
                 _leaderBoardDisabledStyle
             );
