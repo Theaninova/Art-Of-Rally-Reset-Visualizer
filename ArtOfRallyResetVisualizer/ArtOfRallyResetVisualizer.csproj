@@ -40,6 +40,9 @@
     <Reference Include="UnityEngine.PhysicsModule">
       <HintPath>C:\Program Files (x86)\GOG Galaxy\Games\art of rally\artofrally_Data\Managed\UnityEngine.PhysicsModule.dll</HintPath>
     </Reference>
+    <Reference Include="UnityEngine.TextRenderingModule, Version=0.0.0.0, Culture=neutral, PublicKeyToken=null">
+      <HintPath>C:\Program Files (x86)\GOG Galaxy\Games\art of rally\artofrally_Data\Managed\UnityEngine.TextRenderingModule.dll</HintPath>
+    </Reference>
     <Reference Include="UnityModManager">
       <HintPath>C:\Program Files (x86)\GOG Galaxy\Games\art of rally\artofrally_Data\Managed\UnityModManager\UnityModManager.dll</HintPath>
     </Reference>
