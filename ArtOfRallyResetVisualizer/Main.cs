@@ -1,4 +1,5 @@
 ﻿using System.Reflection;
+using ArtOfRallyResetVisualizer.Settings;
 using HarmonyLib;
 using UnityModManagerNet;
 

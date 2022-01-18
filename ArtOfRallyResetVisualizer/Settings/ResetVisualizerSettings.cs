@@ -1,8 +1,7 @@
 ﻿using UnityEngine;
-using UnityEngine.PlayerLoop;
 using UnityModManagerNet;
 
-namespace ArtOfRallyResetVisualizer
+namespace ArtOfRallyResetVisualizer.Settings
 {
     public enum RenderMode { Off, OnHit, Always }
     
@@ -23,27 +22,12 @@ namespace ArtOfRallyResetVisualizer
 
         public void OnChange()
         {
-            UpdateComponent(ResetVisualizer.NoGoVisualizersName, ShowResetZones, ResetColor);
-            UpdateComponent(ResetVisualizer.WaypointVisualizersName, ShowWaypoints, WaypointColor);
+            ResetVisualizer.UpdateAllComponents();
         }
 
         public override void Save(UnityModManager.ModEntry modEntry)
         {
             Save(this, modEntry);
-        }
-
-        private static void UpdateComponent(string name, bool active, Color color)
-        {
-            var root = GameObject.Find(name);
-            if (root == null) return;
-
-            var resets = root.transform.GetChild(0);
-            resets.gameObject.SetActive(active);
-            foreach (var reset in resets)
-            {
-                var renderer = ((Transform)reset).gameObject.GetComponent<MeshRenderer>();
-                renderer.material.color = color;
-            }
         }
     }
 }

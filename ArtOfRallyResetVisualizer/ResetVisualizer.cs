@@ -1,4 +1,5 @@
-﻿using HarmonyLib;
+﻿using System.Collections.Generic;
+using ArtOfRallyResetVisualizer.Settings;
 using UnityEngine;
 
 namespace ArtOfRallyResetVisualizer
@@ -13,10 +14,13 @@ namespace ArtOfRallyResetVisualizer
         private static readonly int SpecularHighlights = Shader.PropertyToID("_SpecularHighlights");
         private static readonly int GlossyReflections = Shader.PropertyToID("_GlossyReflections");
 
-        public const string NoGoVisualizersName = "NoGoVisualizers";
+        public const string ResetVisualizersName = "NoGoVisualizers";
         public const string WaypointVisualizersName = "WaypointVisualizersName";
 
-        public static void SetTransparentColor(GameObject gameObject, Color color)
+        public static List<GameObject> ResetObjects;
+        public static List<GameObject> WaypointObjects;
+
+        public static void SetTransparentColor(GameObject gameObject)
         {
             var meshRenderer = gameObject.GetComponent(typeof(MeshRenderer)) as MeshRenderer;
             if (meshRenderer == null) return;
@@ -33,77 +37,37 @@ namespace ArtOfRallyResetVisualizer
             material.EnableKeyword("_ALPHAPREMULTIPLY_ON");
             material.renderQueue = 3000;
             material.SetFloat(Mode, 3f);
-            material.color = color;
             material.EnableKeyword("_SpecularHighlights");
             material.EnableKeyword("_GlossyReflections");
             material.SetFloat(SpecularHighlights, 0f);
             material.SetFloat(GlossyReflections, 0f);
         }
 
-        public static GameObject CreateDoubleHierarchy(string name)
+        private static void UpdateComponent(List<GameObject> objects, bool active, Color color)
         {
-            var findTransform = new GameObject(name);
-            Object.Instantiate(findTransform);
+            if (objects == null) return;
 
-            var parent = new GameObject($"{name}@child");
-            Object.Instantiate(parent);
-            parent.transform.SetParent(findTransform.transform);
-
-            return parent;
+            foreach (var reset in objects)
+            {
+                reset.SetActive(active);
+                reset.GetComponent<MeshRenderer>().material.color = color;
+            }
         }
-    }
 
-    [HarmonyPatch(typeof(OutOfBoundsManager), nameof(OutOfBoundsManager.Start))]
-    public class OutOfBoundsManagerPatch
-    {
-        // ReSharper disable twice InconsistentNaming
-        public static void Postfix(OutOfBoundsManager __instance, float ___RESET_DISTANCE)
+        public static void UpdateAllComponents(bool onHitShow = false)
         {
-            Transform resets = null;
-            try
-            {
-                resets = GameObject.Find("ResetZones").transform;
-            }
-            catch
-            {
-                // ignored
-            }
+            var settings = Main.ResetVisualizerSettings;
 
-            if (resets != null)
-            {
-                var noGoParent = ResetVisualizer.CreateDoubleHierarchy(ResetVisualizer.NoGoVisualizersName);
-                noGoParent.SetActive(Main.ResetVisualizerSettings.ShowResetZones);
-                foreach (var obj in resets)
-                {
-                    var resetObj = ((Transform)obj).gameObject.GetComponent<SphereCollider>();
-                    var noGoVisualizer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-
-                    noGoVisualizer.transform.SetParent(noGoParent.transform);
-                    noGoVisualizer.transform.position = resetObj.transform.position;
-
-                    var radius = resetObj.radius * 2f;
-                    noGoVisualizer.transform.localScale = new Vector3(radius, radius, radius);
-
-                    ((Collider)noGoVisualizer.GetComponent(typeof(Collider))).isTrigger = true;
-                    ResetVisualizer.SetTransparentColor(noGoVisualizer, Main.ResetVisualizerSettings.ResetColor);
-                }
-            }
-
-            var waypointParent = ResetVisualizer.CreateDoubleHierarchy(ResetVisualizer.WaypointVisualizersName);
-            waypointParent.SetActive(Main.ResetVisualizerSettings.ShowWaypoints);
-            foreach (var transform in __instance.GetWaypointList())
-            {
-                var waypointVisualizer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
-
-                waypointVisualizer.transform.SetParent(waypointParent.transform);
-                waypointVisualizer.transform.position = transform;
-
-                var radius = ___RESET_DISTANCE * 2f;
-                waypointVisualizer.transform.localScale = new Vector3(radius, radius, radius);
-
-                ((Collider)waypointVisualizer.GetComponent(typeof(Collider))).isTrigger = true;
-                ResetVisualizer.SetTransparentColor(waypointVisualizer, Main.ResetVisualizerSettings.WaypointColor);
-            }
+            UpdateComponent(
+                ResetObjects,
+                settings.ShowResetZones && (settings.RenderMode == RenderMode.Always || onHitShow),
+                settings.ResetColor
+            );
+            UpdateComponent(
+                WaypointObjects,
+                settings.ShowWaypoints && (settings.RenderMode == RenderMode.Always || onHitShow),
+                settings.WaypointColor
+            );
         }
     }
 }
