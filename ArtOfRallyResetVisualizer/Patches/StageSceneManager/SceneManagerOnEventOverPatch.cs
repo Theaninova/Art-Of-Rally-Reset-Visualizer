@@ -8,12 +8,16 @@ namespace ArtOfRallyResetVisualizer.Patches.StageSceneManager
     {
         public static void Prefix(ref bool __0)
         {
-            ResetVisualizer.IsLeaderboardDisabled = Main.ResetVisualizerSettings.RenderMode == RenderMode.Always;
             if (ResetVisualizer.IsLeaderboardDisabled)
             {
                 // apply terminal damage
                 __0 = true;
             }
+        }
+
+        public static void Postfix()
+        {
+            ResetVisualizer.IsLeaderboardDisabled = Main.ResetVisualizerSettings.RenderMode == RenderMode.Always;
         }
     }
 }
