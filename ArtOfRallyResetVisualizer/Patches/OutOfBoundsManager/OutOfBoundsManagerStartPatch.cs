@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using ArtOfRallyResetVisualizer.Settings;
+using FluffyUnderware.DevTools.Extensions;
 using HarmonyLib;
 using UnityEngine;
 
@@ -23,6 +24,10 @@ namespace ArtOfRallyResetVisualizer.Patches.OutOfBoundsManager
 
             if (resets != null)
             {
+                foreach (var resetObject in ResetVisualizer.ResetObjects)
+                {
+                    resetObject.Destroy();
+                }
                 ResetVisualizer.ResetObjects = new List<GameObject>();
                 foreach (var obj in resets)
                 {
@@ -40,6 +45,10 @@ namespace ArtOfRallyResetVisualizer.Patches.OutOfBoundsManager
                 }
             }
 
+            foreach (var waypointObject in ResetVisualizer.WaypointObjects)
+            {
+                waypointObject.Destroy();
+            }
             ResetVisualizer.WaypointObjects = new List<GameObject>();
             foreach (var transform in __instance.GetWaypointList())
             {
