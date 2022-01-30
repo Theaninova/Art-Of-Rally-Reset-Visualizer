@@ -3,14 +3,18 @@ using HarmonyLib;
 
 namespace ArtOfRallyResetVisualizer.Patches.OutOfBoundsManager
 {
-    [HarmonyPatch(typeof(global::OutOfBoundsManager), nameof(global::OutOfBoundsManager.SetResettingInProgress))]
+    [HarmonyPatch(typeof(global::OutOfBoundsManager), "FixedUpdate")]
     public class SetResettingInProgressPatch
     {
+        private static bool _isResettingInProgress;
+
         // ReSharper disable once InconsistentNaming
-        public static void Postfix(bool __0)
+        public static void Prefix(bool ___isResettingInProgress)
         {
-            if (Main.ResetVisualizerSettings.RenderMode != RenderMode.OnHit) return;
-            ResetVisualizer.UpdateAllComponents(__0);
+            if (Main.ResetVisualizerSettings.RenderMode != RenderMode.OnHit ||
+                _isResettingInProgress == ___isResettingInProgress) return;
+            _isResettingInProgress = ___isResettingInProgress;
+            ResetVisualizer.UpdateAllComponents(_isResettingInProgress);
         }
     }
 }
