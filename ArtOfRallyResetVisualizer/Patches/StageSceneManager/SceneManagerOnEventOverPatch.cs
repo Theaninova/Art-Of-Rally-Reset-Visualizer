@@ -17,7 +17,9 @@ namespace ArtOfRallyResetVisualizer.Patches.StageSceneManager
 
         public static void Postfix()
         {
-            ResetVisualizer.IsLeaderboardDisabled = Main.ResetVisualizerSettings.RenderMode == RenderMode.Always;
+            ResetVisualizer.HardResetMode = Main.ResetVisualizerSettings.HardResetMode;
+            ResetVisualizer.IsLeaderboardDisabled = Main.ResetVisualizerSettings.RenderMode == RenderMode.Always
+                                                    || ResetVisualizer.HardResetMode != HardResetMode.Intersect;
         }
     }
 }

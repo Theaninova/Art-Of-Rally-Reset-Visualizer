@@ -15,6 +15,7 @@ namespace ArtOfRallyResetVisualizer
         private static readonly int GlossyReflections = Shader.PropertyToID("_GlossyReflections");
 
         public static bool IsLeaderboardDisabled;
+        public static HardResetMode HardResetMode;
 
         public static List<GameObject> ResetObjects;
         public static List<GameObject> WaypointObjects;

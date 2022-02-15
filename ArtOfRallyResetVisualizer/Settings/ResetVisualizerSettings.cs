@@ -7,6 +7,8 @@ namespace ArtOfRallyResetVisualizer.Settings
 {
     public enum RenderMode { Off, OnHit, Always }
     
+    public enum HardResetMode { Intersect, Distance }
+    
     public class ResetVisualizerSettings : UnityModManager.ModSettings, IDrawable
     {
         [Header("Modes")] [Draw(DrawType.ToggleGroup)]
@@ -21,6 +23,9 @@ namespace ArtOfRallyResetVisualizer.Settings
         public Color ResetColor = new Color(1f, 0f, 0f, 0.7f);
 
         [Draw("Waypoint Color")] public Color WaypointColor = new Color(1f, 0.8f, 0.8f, 0.1f);
+
+        [Header("Hard Reset Mode (Anything but Intersect disables leaderboards)")] [Draw(DrawType.ToggleGroup)]
+        public HardResetMode HardResetMode = HardResetMode.Intersect;
 
         public void OnChange()
         {
