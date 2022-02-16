@@ -44,6 +44,14 @@ Disables the intersection checks for hard resets and instead implements a distan
 The purpose of it is to demonstrate how much less frustrating something like this is to the player, and hopefully get it into
 the main game into the future.
 
+##### Compensation modes
+
+*Restart to update compensation previews*
+
+* None: uses the radius as-is
+* Car: uses the car's width to approximate the width-feeling of the previous implementation
+* Static: uses a user-defined custom value to add to the bubble
+
 *for obvious reasons this disables the leaderboards*
 
 ## Installation
