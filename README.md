@@ -38,6 +38,14 @@ hit the finish line*
 
 This will only show the bubbles when you hit them
 
+#### Distance-based hard resets
+
+Disables the intersection checks for hard resets and instead implements a distance based check, similar to the way waypoints work.
+The purpose of it is to demonstrate how much less frustrating something like this is to the player, and hopefully get it into
+the main game into the future.
+
+*for obvious reasons this disables the leaderboards*
+
 ## Installation
 
 Follow the [installation guide](https://www.nexusmods.com/site/mods/21/) of
