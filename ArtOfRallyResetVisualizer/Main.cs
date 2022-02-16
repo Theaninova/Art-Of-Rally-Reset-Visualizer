@@ -1,6 +1,7 @@
 ﻿using System.Reflection;
 using ArtOfRallyResetVisualizer.Settings;
 using HarmonyLib;
+using UnityEngine;
 using UnityModManagerNet;
 
 namespace ArtOfRallyResetVisualizer
@@ -9,12 +10,14 @@ namespace ArtOfRallyResetVisualizer
     public class Main
     {
         public static ResetVisualizerSettings ResetVisualizerSettings;
-        // private static bool _patched = false;
+
+        public static UnityModManager.ModEntry.ModLogger Logger;
 
         // ReSharper disable once ArrangeTypeMemberModifiers
         // ReSharper disable once UnusedMember.Local
         static bool Load(UnityModManager.ModEntry modEntry)
         {
+            Logger = modEntry.Logger;
             var harmony = new Harmony(modEntry.Info.Id);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
 

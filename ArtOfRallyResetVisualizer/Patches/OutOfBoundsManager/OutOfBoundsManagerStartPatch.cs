@@ -38,7 +38,7 @@ namespace ArtOfRallyResetVisualizer.Patches.OutOfBoundsManager
 
             var collisions =
                 from collider in ResetVisualizerState.HardResets
-                where  Vector3.Distance(___playerPosition, collider.center) < collider.radius
+                where Vector3.Distance(___playerPosition, collider.transform.position) < collider.radius
                 select collider;
             if (!collisions.Any()) return;
 
