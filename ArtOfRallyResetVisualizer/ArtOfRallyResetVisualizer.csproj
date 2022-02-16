@@ -7,7 +7,7 @@
     <PackageLicenseUrl>https://github.com/Theaninova/Art-Of-Rally-Reset-Visualizer/blob/master/LICENSE</PackageLicenseUrl>
     <RepositoryUrl>https://github.com/Theaninova/Art-Of-Rally-Reset-Visualizer</RepositoryUrl>
     <RepositoryType>GitHub</RepositoryType>
-    <LangVersion>6</LangVersion>
+    <LangVersion>8</LangVersion>
     <TargetFramework>net462</TargetFramework>
   </PropertyGroup>
 

@@ -1,6 +1,7 @@
 ﻿using System.Collections.Generic;
 using ArtOfRallyResetVisualizer.Settings;
 using UnityEngine;
+using UnityEngine.PlayerLoop;
 
 namespace ArtOfRallyResetVisualizer
 {
@@ -18,6 +19,7 @@ namespace ArtOfRallyResetVisualizer
         public static HardResetMode HardResetMode;
 
         public static List<GameObject> ResetObjects;
+        public static List<GameObject> ResetActualObjects;
         public static List<GameObject> WaypointObjects;
 
         public static void SetTransparentColor(GameObject gameObject)
@@ -56,7 +58,7 @@ namespace ArtOfRallyResetVisualizer
 
         public static void UpdateAllComponents(bool onHitShow = false)
         {
-            var settings = Main.ResetVisualizerSettings;
+            var settings = Main.Settings;
             var alwaysShow = settings.RenderMode == RenderMode.Always && IsLeaderboardDisabled;
 
             UpdateComponent(
@@ -68,6 +70,11 @@ namespace ArtOfRallyResetVisualizer
                 WaypointObjects,
                 settings.ShowWaypoints && (alwaysShow || onHitShow),
                 settings.WaypointColor
+            );
+            UpdateComponent(
+                ResetActualObjects,
+                settings.HardResetMode != HardResetMode.Intersect,
+                settings.ActualResetColor
             );
         }
     }

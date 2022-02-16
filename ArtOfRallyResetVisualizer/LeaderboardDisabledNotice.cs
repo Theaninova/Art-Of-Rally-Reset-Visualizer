@@ -13,7 +13,7 @@ namespace ArtOfRallyResetVisualizer
         
         public static void Draw(UnityModManager.ModEntry modEntry)
         {
-            if (!ResetVisualizer.IsLeaderboardDisabled && Main.ResetVisualizerSettings.RenderMode != RenderMode.Always) return;
+            if (!ResetVisualizer.IsLeaderboardDisabled && Main.Settings.RenderMode != RenderMode.Always) return;
 
             if (_leaderBoardDisabledStyle == null)
             {
@@ -30,7 +30,7 @@ namespace ArtOfRallyResetVisualizer
                 };
             }
                 
-            GUI.Label(Rect.zero, Main.ResetVisualizerSettings.RenderMode == RenderMode.Always
+            GUI.Label(Rect.zero, Main.Settings.RenderMode == RenderMode.Always
                     ? ResetVisualizer.IsLeaderboardDisabled
                         ? "LEADERBOARD DISABLED"
                         : "Start new game to enable visualizers"

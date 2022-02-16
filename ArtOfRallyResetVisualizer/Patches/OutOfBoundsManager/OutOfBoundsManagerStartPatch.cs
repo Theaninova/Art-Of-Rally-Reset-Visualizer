@@ -12,44 +12,45 @@ using UnityEngine;
 
 namespace ArtOfRallyResetVisualizer.Patches.OutOfBoundsManager
 {
-    public static class ResetVisualizerState
+    public static class Triggers
     {
-        public static SphereCollider[] HardResets = { };
-
-        public static readonly MethodInfo ResetCarOutOfBoundsAnimation =
-            typeof(global::OutOfBoundsManager).GetMethod("ResetCarOutOfBoundsAnimation",
-                BindingFlags.Instance | BindingFlags.NonPublic);
+        public static SphereCollider CurrentTrigger;
+        public static Bounds CarBounds;
     }
-
+    
     [HarmonyPatch(typeof(global::OutOfBoundsManager), "FixedUpdate")]
     public class FixedUpdatePatch
     {
-        public static void Postfix(
-            global::OutOfBoundsManager __instance,
-            ref bool ___isShowingOutOfBoundsAnimation,
-            Vector3 ___playerPosition)
+        public static void Postfix()
         {
-            if (ResetVisualizer.HardResetMode != HardResetMode.Distance) return;
+            if (Triggers.CurrentTrigger == null) return;
 
-            if (GameEntryPoint.EventManager.playerManager == null ||
-                GameModeManager.GameMode == GameModeManager.GAME_MODES.FREEROAM ||
-                GameEntryPoint.EventManager.status != EventStatusEnums.EventStatus.UNDERWAY ||
-                GameEntryPoint.EventManager.outOfBoundsManager.IsResettingInProgress()) return;
+            var car = GameEntryPoint.EventManager.playerManager.playerRigidBody;
+            var bounds = new Bounds(car.transform.position, Vector3.zero);
+            foreach (var collider in car.GetComponentsInChildren<Collider>()) {
+                bounds.Encapsulate(collider.bounds);
+            }
 
-            var collisions =
-                from collider in ResetVisualizerState.HardResets
-                where Vector3.Distance(___playerPosition, collider.transform.position) < collider.radius
-                select collider;
-            if (!collisions.Any()) return;
+            var bias = Main.Settings.HardResetDistanceCompensation switch
+            {
+                HardResetDistanceCompensation.Car => bounds.extents.x,
+                HardResetDistanceCompensation.Static => Main.Settings.ManualDistanceCompensation,
+                _ => 0,
+            };
 
-            ___isShowingOutOfBoundsAnimation = true;
-            __instance.SetResettingInProgress(true);
-            __instance.StartCoroutine(
-                (IEnumerator)ResetVisualizerState.ResetCarOutOfBoundsAnimation.Invoke(__instance,
-                    new object[] { TimeConstants.ResetCarPenalty }));
+            var distance = Vector3.Distance(
+                car.transform.position,
+                Triggers.CurrentTrigger.transform.position);
+
+            if (distance > Triggers.CurrentTrigger.radius + bias) return;
+
+            Main.Logger.Log("Resetting Car for Corner Cutting");
+            Triggers.CurrentTrigger = null;
+            
+            GameEntryPoint.EventManager.outOfBoundsManager.HardReset();
         }
     }
-
+    
     [HarmonyPatch(typeof(global::OutOfBoundsManager), nameof(global::OutOfBoundsManager.Start))]
     public class OutOfBoundsManagerStartPatch
     {
@@ -68,26 +69,47 @@ namespace ArtOfRallyResetVisualizer.Patches.OutOfBoundsManager
 
             if (resets != null)
             {
+                var car = GameEntryPoint.EventManager.playerManager.playerRigidBody;
+                Triggers.CarBounds = new Bounds(car.transform.position, Vector3.zero);
+                foreach (var collider in car.GetComponentsInChildren<Collider>()) {
+                    Triggers.CarBounds.Encapsulate(collider.bounds);
+                }
+                
                 ResetVisualizer.ResetObjects?.ForEach(Object.Destroy);
                 ResetVisualizer.ResetObjects = new List<GameObject>();
-                var hardResets = new List<SphereCollider>();
+                ResetVisualizer.ResetActualObjects?.ForEach(Object.Destroy);
+                ResetVisualizer.ResetActualObjects = new List<GameObject>();
                 foreach (var obj in resets)
                 {
                     var resetObj = ((Transform)obj).gameObject.GetComponent<SphereCollider>();
-                    hardResets.Add(resetObj);
                     var resetVisualizer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
                     ResetVisualizer.ResetObjects.Add(resetVisualizer);
 
-                    resetVisualizer.transform.position = resetObj.transform.position;
+                    var position = resetObj.transform.position;
+                    resetVisualizer.transform.position = position;
 
                     var diameter = resetObj.radius * 2f;
                     resetVisualizer.transform.localScale = new Vector3(diameter, diameter, diameter);
 
                     ((Collider)resetVisualizer.GetComponent(typeof(Collider))).isTrigger = true;
                     ResetVisualizer.SetTransparentColor(resetVisualizer);
-                }
+                    // ---------------------
+                    var actualVisualizer = GameObject.CreatePrimitive(PrimitiveType.Sphere);
+                    ResetVisualizer.ResetActualObjects.Add(actualVisualizer);
 
-                ResetVisualizerState.HardResets = hardResets.ToArray();
+                    actualVisualizer.transform.position = position;
+
+                    diameter = resetObj.radius * 2f + Main.Settings.HardResetDistanceCompensation switch
+                    {
+                        HardResetDistanceCompensation.Car => Triggers.CarBounds.extents.x,
+                        HardResetDistanceCompensation.Static => Main.Settings.ManualDistanceCompensation,
+                        _ => 0,
+                    };
+                    actualVisualizer.transform.localScale = new Vector3(diameter, diameter, diameter);
+
+                    ((Collider)actualVisualizer.GetComponent(typeof(Collider))).isTrigger = true;
+                    ResetVisualizer.SetTransparentColor(actualVisualizer);
+                }
             }
 
             ResetVisualizer.WaypointObjects?.ForEach(Object.Destroy);

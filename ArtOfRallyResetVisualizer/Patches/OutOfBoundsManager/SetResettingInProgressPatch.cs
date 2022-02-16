@@ -11,7 +11,7 @@ namespace ArtOfRallyResetVisualizer.Patches.OutOfBoundsManager
         // ReSharper disable once InconsistentNaming
         public static void Prefix(bool ___isResettingInProgress)
         {
-            if (Main.ResetVisualizerSettings.RenderMode != RenderMode.OnHit ||
+            if (Main.Settings.RenderMode != RenderMode.OnHit ||
                 _isResettingInProgress == ___isResettingInProgress) return;
             _isResettingInProgress = ___isResettingInProgress;
             ResetVisualizer.UpdateAllComponents(_isResettingInProgress);

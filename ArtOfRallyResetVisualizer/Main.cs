@@ -9,7 +9,7 @@ namespace ArtOfRallyResetVisualizer
     // ReSharper disable once ClassNeverInstantiated.Global
     public class Main
     {
-        public static ResetVisualizerSettings ResetVisualizerSettings;
+        public static ResetVisualizerSettings Settings;
 
         public static UnityModManager.ModEntry.ModLogger Logger;
 
@@ -21,11 +21,11 @@ namespace ArtOfRallyResetVisualizer
             var harmony = new Harmony(modEntry.Info.Id);
             harmony.PatchAll(Assembly.GetExecutingAssembly());
 
-            ResetVisualizerSettings = UnityModManager.ModSettings.Load<ResetVisualizerSettings>(modEntry);
-            modEntry.OnGUI = entry => ResetVisualizerSettings.Draw(entry);
-            modEntry.OnSaveGUI = entry => ResetVisualizerSettings.Save(entry);
+            Settings = UnityModManager.ModSettings.Load<ResetVisualizerSettings>(modEntry);
+            modEntry.OnGUI = entry => Settings.Draw(entry);
+            modEntry.OnSaveGUI = entry => Settings.Save(entry);
             modEntry.OnFixedGUI = LeaderboardDisabledNotice.Draw;
-            ResetVisualizer.IsLeaderboardDisabled = ResetVisualizerSettings.RenderMode == RenderMode.Always;
+            ResetVisualizer.IsLeaderboardDisabled = Settings.RenderMode == RenderMode.Always;
 
             return true;
         }

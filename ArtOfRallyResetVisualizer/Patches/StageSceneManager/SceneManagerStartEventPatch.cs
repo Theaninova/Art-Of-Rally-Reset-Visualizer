@@ -8,8 +8,8 @@ namespace ArtOfRallyResetVisualizer.Patches.StageSceneManager
     {
         public static void Prefix()
         {
-            ResetVisualizer.HardResetMode = Main.ResetVisualizerSettings.HardResetMode;
-            ResetVisualizer.IsLeaderboardDisabled = Main.ResetVisualizerSettings.RenderMode == RenderMode.Always
+            ResetVisualizer.HardResetMode = Main.Settings.HardResetMode;
+            ResetVisualizer.IsLeaderboardDisabled = Main.Settings.RenderMode == RenderMode.Always
                                                     || ResetVisualizer.HardResetMode != HardResetMode.Intersect;
         }
     }
