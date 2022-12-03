@@ -60,11 +60,23 @@ namespace ArtOfRallyResetVisualizer.Patches.OutOfBoundsManager
             Transform resets = null;
             try
             {
-                resets = GameObject.Find("ResetZones").transform;
+                var test = GameObject.Find("ResetZones");
+                if (!test)
+                {
+                    Main.Logger.Log("Typo in \"ResetZones\" name; trying \"Reset Zones\"");
+                    test = GameObject.Find("Reset Zones");
+                }
+
+                if (!test)
+                {
+                    Main.Logger.Log("Couldn't find \"Reset Zones\" name; trying \"Extra Reset Zones\"");
+                    test = GameObject.Find("Extra Reset Zones");
+                }
+                resets = test.transform;
             }
             catch
             {
-                // ignored
+                Main.Logger.Log("Could not find \"ResetZones\"");
             }
 
             if (resets != null)
